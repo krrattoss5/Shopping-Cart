@@ -7,7 +7,7 @@ export default function Products({ products }) {
       <ul>
         {products.map(p => (
           <li key={p.id}>
-            <img src={p.thumbnail} alt={p.title} />
+            <img src={p?.thumbnail} alt={p.title} />
             <div>
               <strong>{p.title}</strong> - ${p.price}
             </div>
