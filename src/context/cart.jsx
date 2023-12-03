@@ -1,7 +1,7 @@
-import { useContext,useState } from "react";
+import { createContext,useState } from "react";
 
 //1. CREAR CONTEXTO:
-export const CartContext = useContext()
+export const CartContext = createContext()
 
 //2. CREAR PROVIDER:
 export function CartProvider({children}){
@@ -27,7 +27,7 @@ export function CartProvider({children}){
     ]})
 
   }
-  const clearCart = (product) => {
+  const clearCart = () => {
     setCart([])
   }
   return (
