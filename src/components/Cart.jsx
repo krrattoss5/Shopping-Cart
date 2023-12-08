@@ -1,9 +1,15 @@
 import { useId } from 'react'
 import {ClearCartIcon,CartIcon} from './Icons'
 import './Cart.css'
+import { useCart } from '../hooks/useCart'
 
 export default function Cart(){
   const cartCheckboxId = useId()
+
+  const {cart, clearCart, addCart } = useCart()
+
+  const withProducts = cart.length >= 1 ? true : false
+
   return(
     <>
       <label className='cart-button' htmlFor={cartCheckboxId}>
@@ -11,27 +17,31 @@ export default function Cart(){
       </label>
       <input id={cartCheckboxId} type="checkbox" hidden/>
 
-      <aside className='cart'>
+      <aside style={{overflow:'scroll'}} className='cart'>
         <ul>
-          <li>
-            <img src="" alt="" />
+          { withProducts
+            ? cart.map(p => (
+              <li key={p.id}>
+                <img src={p.thumbnail} alt="" />
 
-            <div>
-              <strong></strong>
-            </div>
+                <div>
+                  <strong>{p.title}</strong> - ${p.price * p.quantity}
+                </div>
 
-            <footer>
-              <button>-</button>
-              <small>
-                Qty:
-              </small>
-              <button>+</button>
-            </footer>
+                <footer>
+                  <button>-</button>
+                  <small>
+                    Qty:{p.quantity}
+                  </small>
+                  <button onClick={() => addCart(p)}>+</button>
+                </footer>
 
-          </li>
+              </li>
+            ))
+            : 'No products here!'}
         </ul>
 
-        <button><ClearCartIcon /></button>
+        <button onClick={clearCart}><ClearCartIcon /></button>
 
       </aside>
     </>
